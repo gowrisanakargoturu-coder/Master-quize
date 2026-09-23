@@ -1,0 +1,305 @@
+```html
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Quiz - Goturu Interactive</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
+    
+    :root {
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff007f;
+      --bg-dark: #0b0f19;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif;
+      background: var(--bg-dark);
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Goturu Interactive Neon Glassmorphism Theme */
+    .glass-box {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 243, 255, 0.25);
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.15);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card:hover {
+      background: rgba(0, 243, 255, 0.06);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    }
+
+    /* Goturu Circular Neon Loading Spinner */
+    .neon-circle-spinner {
+      width: 75px;
+      height: 75px;
+      border: 5px solid rgba(0, 243, 255, 0.1);
+      border-top: 5px solid var(--neon-cyan);
+      border-right: 5px solid var(--neon-pink);
+      border-radius: 50%;
+      animation: spinRing 0.8s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+    }
+
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .fade-anim {
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Glow Text */
+    .neon-text-cyan {
+      text-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center p-3 md:p-6">
+
+  <!-- HEADER / NAVBAR -->
+  <header class="w-full max-w-4xl flex justify-between items-center p-4 glass-box rounded-2xl mb-6">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
+      <div class="bg-gradient-to-tr from-cyan-500 to-blue-600 p-3 rounded-xl text-black font-extrabold shadow-lg shadow-cyan-500/30">
+        <i class="fa-solid fa-brain text-2xl"></i>
+      </div>
+      <div>
+        <h1 class="font-extrabold text-xl md:text-2xl tracking-wide text-cyan-400 neon-text-cyan">
+          MASTER QUIZ
+        </h1>
+        <p class="text-[11px] text-slate-400 font-medium">Goturu Interactive Portal • 600 Unique Questions</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <!-- Language Switcher -->
+      <button onclick="toggleLanguage()" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 text-xs font-bold transition flex items-center gap-2 text-cyan-300">
+        <i class="fa-solid fa-language text-sm"></i>
+        <span id="lang-btn-text">TELUGU</span>
+      </button>
+      
+      <!-- Score Indicator -->
+      <div class="px-3.5 py-2 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+        <i class="fa-solid fa-trophy text-amber-400"></i>
+        <span id="user-score" class="text-white text-sm font-extrabold">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="w-full max-w-4xl flex-1 flex flex-col justify-center">
+
+    <!-- 1. CATEGORY SELECTION SCREEN -->
+    <div id="module-select-screen" class="fade-anim space-y-6 text-center">
+      <div class="space-y-2">
+        <h2 class="text-2xl md:text-4xl font-extrabold text-white">Select Quiz Module</h2>
+        <p class="text-slate-400 text-xs md:text-sm max-w-lg mx-auto">
+          ప్రతి Category లో 200 Unique Questions (Beginner: 1-50, Medium: 51-150, Very Hard: 151-200)
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
+        
+        <!-- Movies Card -->
+        <div onclick="startQuiz('movies')" class="glass-card p-6 rounded-2xl cursor-pointer hover:scale-[1.03] transition duration-300 group flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 text-3xl mb-4 group-hover:bg-pink-500 group-hover:text-white transition shadow-lg shadow-pink-500/20">
+            <i class="fa-solid fa-film"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-1">Movies Quiz</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Telugu & Indian Cinema, Directors, Stars, Awards & Classics</p>
+          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-pink-950/80 border border-pink-500/40 text-pink-300">200 Unique Questions</span>
+        </div>
+
+        <!-- GK & UPSC Card -->
+        <div onclick="startQuiz('gk')" class="glass-card p-6 rounded-2xl cursor-pointer hover:scale-[1.03] transition duration-300 group flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-3xl mb-4 group-hover:bg-cyan-500 group-hover:text-black transition shadow-lg shadow-cyan-500/20">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-1">General GK & UPSC</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">History, World Geography, Science, Space & Competitive GK</p>
+          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">200 Unique Questions</span>
+        </div>
+
+        <!-- Politics Card -->
+        <div onclick="startQuiz('politics')" class="glass-card p-6 rounded-2xl cursor-pointer hover:scale-[1.03] transition duration-300 group flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-3xl mb-4 group-hover:bg-emerald-500 group-hover:text-white transition shadow-lg shadow-emerald-500/20">
+            <i class="fa-solid fa-landmark"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-1">Politics Quiz</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Indian Constitution, Articles, Parliament & World Politics</p>
+          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">200 Unique Questions</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. GOTURU CIRCULAR NEON LOADING ANIMATION -->
+    <div id="loading-screen" class="hidden flex flex-col items-center justify-center py-20 space-y-6 fade-anim">
+      <div class="neon-circle-spinner"></div>
+      <div class="text-center space-y-1">
+        <p class="text-cyan-400 font-extrabold text-sm tracking-widest uppercase animate-pulse neon-text-cyan" id="loading-text">
+          Loading 200 Unique Master Questions...
+        </p>
+        <p class="text-slate-500 text-xs">Goturu Interactive Engine</p>
+      </div>
+    </div>
+
+    <!-- 3. ACTIVE QUIZ PLAYGROUND -->
+    <div id="quiz-screen" class="hidden fade-anim space-y-5">
+      
+      <!-- Top Level Status & Progress Bar -->
+      <div class="glass-box p-4 rounded-2xl flex flex-col gap-3">
+        <div class="flex justify-between items-center">
+          <!-- Difficulty Badge -->
+          <span id="level-badge" class="px-3.5 py-1 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+            BEGINNER LEVEL (Q 1 - 50)
+          </span>
+
+          <!-- Question Counter -->
+          <div class="text-xs text-slate-400 font-semibold">
+            Question <span id="current-q-num" class="text-cyan-400 font-extrabold text-base">1</span> <span class="text-slate-600">/ 200</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+          <div id="progress-bar-fill" class="bg-gradient-to-r from-cyan-400 to-pink-500 h-full w-[0.5%] transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="glass-box p-6 md:p-8 rounded-2xl space-y-6">
+        <h2 id="question-text" class="text-lg md:text-2xl font-extrabold text-white leading-snug tracking-wide">
+          <!-- Dynamic Question -->
+        </h2>
+
+        <!-- Options Grid -->
+        <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2">
+          <!-- Dynamic Options -->
+        </div>
+      </div>
+
+      <!-- Explanation Box (Appears ON Wrong Answer or Manual Review) -->
+      <div id="explanation-box" class="hidden glass-box p-5 rounded-2xl border-l-4 border-amber-500 bg-amber-950/30 space-y-4 fade-anim">
+        <div class="flex items-center gap-2 text-amber-400 font-extrabold text-sm tracking-wide">
+          <i class="fa-solid fa-circle-info text-base"></i> EXPLANATION / వివరణ:
+        </div>
+        <p id="explanation-text" class="text-xs md:text-sm text-slate-200 leading-relaxed font-medium">
+          <!-- Dynamic Explanation -->
+        </p>
+        <button onclick="nextQuestion()" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-extrabold rounded-xl shadow-lg shadow-cyan-500/20 transition flex items-center justify-center gap-2 text-sm tracking-wider">
+          NEXT QUESTION <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 4. RESULT SCREEN -->
+    <div id="result-screen" class="hidden fade-anim text-center space-y-6 glass-box p-8 rounded-3xl">
+      <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-500 mx-auto flex items-center justify-center text-black text-4xl shadow-xl shadow-amber-500/20">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+      <div>
+        <h2 class="text-3xl font-extrabold text-white">Quiz Completed!</h2>
+        <p class="text-slate-400 text-sm mt-1" id="result-subtitle">Great effort on completing the 200 Questions Master Quiz module.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-4">
+        <div class="glass-card p-4 rounded-xl">
+          <div class="text-xs text-slate-400 font-bold mb-1">TOTAL QUESTIONS</div>
+          <div class="text-2xl font-extrabold text-cyan-400" id="res-total">200</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl">
+          <div class="text-xs text-slate-400 font-bold mb-1">SCORE</div>
+          <div class="text-2xl font-extrabold text-emerald-400" id="res-score">0</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl col-span-2 md:col-span-1">
+          <div class="text-xs text-slate-400 font-bold mb-1">ACCURACY</div>
+          <div class="text-2xl font-extrabold text-pink-400" id="res-accuracy">0%</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 pt-2">
+        <button onclick="startQuiz(currentCategory)" class="flex-1 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-extrabold rounded-xl transition text-sm">
+          <i class="fa-solid fa-rotate-right mr-2"></i> RESTART MODULE
+        </button>
+        <button onclick="goHome()" class="flex-1 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-extrabold rounded-xl border border-slate-700 transition text-sm">
+          <i class="fa-solid fa-house mr-2"></i> SELECT ANOTHER MODULE
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-8 text-[11px] text-slate-500 text-center font-medium">
+    Goturu Interactive • Master Quiz Platform
+  </footer>
+
+  <script>
+    let currentCategory = null;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let currentLang = 'te'; // 'te' = Telugu, 'en' = English
+    let canAnswer = true;
+
+    const movieTopics = [
+      { t: "RRR 'Naatu Naatu' Music Composer", c: "M.M. Keeravani", o: ["M.M. Keeravani", "DSP", "Thaman", "A.R. Rahman"], exp_te: "కీరవాణి ఆస్కార్ అవార్డు గెలుచుకున్నారు.", exp_en: "M.M. Keeravani won the Oscar." },
+      { t: "Baahubali Lead Actor", c: "Prabhas", o: ["Prabhas", "Rana", "Ram Charan", "NTR"], exp_te: "ప్రభాస్ బాహుబలిగా నటించారు.", exp_en: "Prabhas starred as Baahubali." },
+      { t: "Pushpa Best Actor National Award", c: "Allu Arjun", o: ["Allu Arjun", "Mahesh Babu", "Nani", "Vijay Deverakonda"], exp_te: "అల్లు అర్జున్ జాతీయ అవార్డు గెలుచుకున్నారు.", exp_en: "Allu Arjun won Best Actor National Award." },
+      { t: "Kalki 2898 AD Director", c: "Nag Ashwin", o: ["Nag Ashwin", "Rajamouli", "Sukumar", "Sandeep Vanga"], exp_te: "నాగ్ అశ్విన్ ఈ విజువల్ వండర్ తెరకెక్కించారు.", exp_en: "Nag Ashwin directed Kalki 2898 AD." },
+      { t: "Devara Lead Actor", c: "NTR Jr", o: ["NTR Jr", "Ram Charan", "Prabhas", "Allu Arjun"], exp_te: "జూనియర్ ఎన్టీఆర్ దేవర లో కథానాయకుడు.", exp_en: "NTR Jr played the lead in Devara." },
+      { t: "Salaar Director", c: "Prashanth Neel", o: ["Prashanth Neel", "Lokesh Kanagaraj", "Neelakanta", "Boyapati"], exp_te: "ప్రశాంత్ నీల్ సాలార్ దర్శకుడు.", exp_en: "Prashanth Neel directed Salaar." },
+      { t: "HanuMan Lead Hero", c: "Teja Sajja", o: ["Teja Sajja", "Nithiin", "Vishwak Sen", "Siddhu"], exp_te: "తేజ సజ్జా హనుమాన్ హీరో.", exp_en: "Teja Sajja played Hanumanthu in HanuMan." },
+      { t: "Arjun Reddy Director", c: "Sandeep Reddy Vanga", o: ["Sandeep Reddy Vanga", "Puri Jagannadh", "Trivikram", "Gautam Tinnanuri"], exp_te: "సందీప్ రెడ్డి వంగ ఈ చిత్ర దర్శకుడు.", exp_en: "Sandeep Reddy Vanga directed Arjun Reddy." },
+      { t: "Ala Vaikunthapurramuloo Music", c: "Thaman S", o: ["Thaman S", "DSP", "Keeravani", "Mani Sharma"], exp_te: "థమన్ ఈ చిత్రానికి బ్లాక్ బస్టర్ సంగీతం అందించారు.", exp_en: "Thaman S composed the blockbuster music." },
+      { t: "Eega Director", c: "S.S. Rajamouli", o: ["S.S. Rajamouli", "V.V. Vinayak", "Srinu Vaitla", "Puri Jagannadh"], exp_te: "ఎస్.ఎస్. రాజమౌళి ఈ వినూత్న చిత్రాన్ని రూపొందించారు.", exp_en: "S.S. Rajamouli directed Eega." },
+      { t: "Magadheera Heroine", c: "Kajal Aggarwal", o: ["Kajal Aggarwal", "Samantha", "Anushka", "Tamannaah"], exp_te: "కాజల్ అగర్వాల్ మిట్రావింద పాత్ర పోషించారు.", exp_en: "Kajal Aggarwal played Mithravinda." },
+      { t: "Pokiri Director", c: "Puri Jagannadh", o: ["Puri Jagannadh", "Trivikram", "V.V. Vinayak", "K. Raghavendra Rao"], exp_te: "పూరి జగన్నాథ్ పోకిరి దర్శకుడు.", exp_en: "Puri Jagannadh directed Pokiri." },
+      { t: "Athadu Director", c: "Trivikram Srinivas", o: ["Trivikram Srinivas", "Sukumar", "Koratala Siva", "Srinu Vaitla"], exp_te: "త్రివిక్రమ్ శ్రీనివాస్ అతడు దర్శకుడు.", exp_en: "Trivikram Srinivas directed Athadu." },
+      { t: "Rangasthalam Director", c: "Sukumar", o: ["Sukumar", "Rajamouli", "Boyapati", "Koratala Siva"], exp_te: "సుకుమార్ రంగస్థలం దర్శకుడు.", exp_en: "Sukumar directed Rangasthalam." },
+      { t: "Mahanati Biopic Actress", c: "Savitri", o: ["Savitri", "Jamuna", "Bhanumathi", "Soundarya"], exp_te: "మహానటి సావిత్రి గారి జీవిత కథ.", exp_en: "Mahanati is the biopic of legendary actress Savitri." },
+      { t: "Sita Ramam Director", c: "Hanu Raghavapudi", o: ["Hanu Raghavapudi", "Nag Ashwin", "Mahi V Raghav", "Siva Nirvana"], exp_te: "హను రాఘవపూడి ఈ చిత్రాన్ని తెరకెక్కించారు.", exp_en: "Hanu Raghavapudi directed Sita Ramam." },
+      { t: "Jersey Sport Subject", c: "Cricket", o: ["Cricket", "Kabaddi", "Hockey", "Football"], exp_te: "జర్సీ క్రికెట్ నేపథ్యంలో సాగే చిత్రం.", exp_en: "Jersey is an emotional cricket drama." },
+      { t: "Srimanthudu Hero", c: "Mahesh Babu", o: ["Mahesh Babu", "Pawan Kalyan", "NTR", "Prabhas"], exp_te: "మహేష్ బాబు శ్రీమంతుడు గా నటించారు.", exp_en: "Mahesh Babu starred in Srimanthudu." },
+      { t: "Geetha Govindam Lead Actress", c: "Rashmika Mandanna", o: ["Rashmika Mandanna", "Pooja Hegde", "Sai Pallavi", "Keerthy Suresh"], exp_te: "రష్మిక మందన్న గీత పాత్రలో నటించారు.", exp_en: "Rashmika Mandanna played Geetha." },
+      { t: "Kantara Actor & Director", c: "Rishab Shetty", o: ["Rishab Shetty", "Rakshit Shetty", "Upendra", "Prashanth Neel"], exp_te: "రిషబ్ శెట్టి కాంతార కు దర్శకత్వం వహించి నటించారు.", exp_en: "Rishab Shetty directed and acted in Kantara." },
+      { t: "KGF Hero Character", c: "Rocky Bhai", o: ["Rocky Bhai", "Pushpa Raj", "Bhairava", "Vikram"], exp_te: "కేజీఎఫ్ లో యష్ రాకీ భాయ్ గా అలరించారు.", exp_en: "Yash played Rocky Bhai in KGF." },
+      { t: "Robo / Enthiran Hero", c: "Rajinikanth", o: ["Rajinikanth", "Kamal Haasan", "Vijay", "Surya"], exp_te: "రజినీకాంత్ రోబో చిత్రంలో నటించారు.", exp_en: "Rajinikanth starred in Robo." },
+      { t: "Vikram (2022) Director", c: "Lokesh Kanagaraj", o: ["Lokesh Kanagaraj", "Atlee", "Nelson", "Shankar"], exp_te: "లోకేష్ కనగరాజ్ విక్రమ్ దర్శకుడు.", exp_en: "Lokesh Kanagaraj directed Vikram." },
+      { t: "Jailer Lead Actor", c: "Rajinikanth", o: ["Rajinikanth", "Mohanlal", "Mammootty", "Ajith"], exp_te: "రజినీకాంత్ జైలర్ గా నటించారు.", exp_en: "Rajinikanth played Tiger Muthuvel Pandian in Jailer." },
+      { t: "Dangal Lead Actor", c: "Aamir Khan", o: ["Aamir Khan", "Salman Khan", "Shah Rukh Khan", "Akshay Kumar"], exp_te: "అమీర్ ఖాన్ మహావీర్ సింగ్ ఫోగట్ గా నటించారు.", exp_en: "Aamir Khan played Mahavir Singh Phogat in Dangal." },
+      { t: "Sholay Iconic Villain", c: "Gabbar Singh", o: ["Gabbar Singh", "Mogambo", "Shakal", "Kancha Cheena"], exp_te: "అమ్జాద్ ఖాన్ గబ్బర్ సింగ్ గా నటించారు.", exp_en: "Amjad Khan played Gabbar Singh." },
+      { t: "DDLJ Lead Pair", c: "Shah Rukh Khan & Kajol", o: ["Shah Rukh Khan & Kajol", "Aamir & Juhi", "Salman & Madhuri", "Akshay & Raveena"], exp_te: "షారూఖ్ ఖాన్, కాజోల్ జంటగా నటించారు.", exp_en: "Shah Rukh Khan and Kajol starred in DDLJ." },
+      { t: "3 Idiots Director", c: "Rajkumar Hirani", o: ["Rajkumar Hirani", "Karan Johar", "Sanjay Leela Bhansali", "Anurag Kashyap"], exp_te: "రాజ్‌కుమార్ హిరానీ 3 ఇడియట్స్ దర్శకుడు.", exp_en: "Rajkumar Hirani directed 3 Idiots." },
+      { t: "Stree 2 Lead Actress", c: "Shraddha Kapoor", o: ["Shraddha Kapoor", "Alia Bhatt", "Kriti Sanon", "Kiara Advani"], exp_te: "శ్రద్ధా కపూర్ స్త్రీ 2 నటి.", exp_en: "Shraddha Kapoor starred in Stree 2." },
+      { t: "Lagaan Oscar Nominated Year", c: "2001", o: ["2001", "1998", "2005", "2010"], exp_te: "2001లో లగాన్ ఆస్కార్ బెస్ట్ ఫారిన్ ఫిల్మ్ రేసులో నిలిచింది.", exp_en: "Lagaan was nominated for Best Foreign Film at Oscars in 2001." }
+    ];
+
+    const gkTopics = [
+      { t: "Longest River in India", c: "Ganga", o: ["Ganga", "Godavari", "Yamuna", "Brahmaputra"], exp_te: "గంగా నది భారతదేశంలో అత్యంత పొడవైన నది (2,525 km).", exp_en: "Ganga is the longest river flowing in India." },
+      { t: "Capital on Yamuna River", c: "New Delhi", o: ["New Delhi", "Kolkata", "Mumbai", "Chennai"], exp_te: "న్యూఢిల్లీ యమునా నది ఒడ్డున ఉంది.", exp_en: "New Delhi is located along the Yamuna." },
+      { t: "Highest Mountain Peak in India", c: "Kanchenjunga", o: ["Kanchenjunga", "Nanda Devi", "Anamudi", "K2 (PoK)"], exp_te: "భారత భూభాగంలోని అత్యున్నత శిఖరం కాంచన్‌జంగా.", exp_en: "Kanchenjunga is the highest peak inside India." },
+      { t: "Largest State in India by Area", c: "Rajasthan", o: ["Rajasthan", "Madhya Pradesh", "Maharashtra", "UP"], exp_te: "వైశాల్యంలో రాజస్థాన్ అతిపెద్ద రాష్ట్రం.", exp_en: "Ra
