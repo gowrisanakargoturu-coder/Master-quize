@@ -1,12 +1,10 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="te">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Master Quiz - Goturu Interactive</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
@@ -26,9 +24,8 @@
       min-height: 100vh;
     }
 
-    /* Goturu Portal Neon Glassmorphism Theme */
     .glass-box {
-      background: rgba(18, 24, 38, 0.9);
+      background: rgba(18, 24, 38, 0.95);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(0, 243, 255, 0.25);
       box-shadow: 0 0 25px rgba(0, 243, 255, 0.1);
@@ -45,7 +42,6 @@
       box-shadow: 0 5px 20px rgba(0, 243, 255, 0.15);
     }
 
-    /* Goturu Circular Neon Loading Spinner */
     .neon-circle-spinner {
       width: 75px;
       height: 75px;
@@ -76,9 +72,9 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between items-center p-3 md:p-6">
+<body class="min-h-screen flex flex-col justify-between items-center p-4 md:p-6">
 
-  <!-- HEADER / NAVBAR -->
+  <!-- HEADER -->
   <header class="w-full max-w-4xl flex justify-between items-center p-4 glass-box rounded-2xl mb-6">
     <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
       <div class="bg-cyan-500/15 border border-cyan-400 p-3 rounded-xl text-cyan-400 font-extrabold shadow-lg shadow-cyan-500/20">
@@ -93,13 +89,11 @@
     </div>
     
     <div class="flex items-center gap-3">
-      <!-- Language Switcher -->
       <button onclick="toggleLanguage()" class="px-3.5 py-2 rounded-xl bg-[#090d16] border border-cyan-500/40 hover:border-cyan-400 text-xs font-bold transition flex items-center gap-2 text-cyan-300">
         <i class="fa-solid fa-language text-sm"></i>
         <span id="lang-btn-text">TELUGU</span>
       </button>
       
-      <!-- Score Indicator -->
       <div class="px-3.5 py-2 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-xs font-bold text-cyan-400 flex items-center gap-1.5">
         <i class="fa-solid fa-trophy text-amber-400"></i>
         <span id="user-score" class="text-white text-sm font-extrabold">0</span>
@@ -107,72 +101,68 @@
     </div>
   </header>
 
-  <!-- MAIN VIEWPORT CONTAINER -->
+  <!-- MAIN CONTAINER -->
   <main class="w-full max-w-4xl flex-1 flex flex-col justify-center">
 
-    <!-- 1. CATEGORY SELECTION SCREEN -->
+    <!-- MODULE SELECTION -->
     <div id="module-select-screen" class="fade-anim space-y-6 text-center">
       <div class="space-y-2">
         <h2 class="text-2xl md:text-3xl font-extrabold text-white">Select Quiz Module</h2>
         <p class="text-slate-400 text-xs md:text-sm max-w-lg mx-auto">
-          ప్రతి Category లో Comprehensive Questions ఉంటాయి. (Beginner, Medium & Hard levels).
+          దయచేసి కింద ఇచ్చిన కేటగిరీలలో ఒకదానిని ఎంచుకోండి.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
-        <!-- Movies Card -->
         <div onclick="startQuiz('movies')" class="glass-card p-6 rounded-2xl cursor-pointer transition duration-300 group flex flex-col items-center text-center">
           <div class="w-16 h-16 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 text-3xl mb-4 group-hover:bg-pink-500 group-hover:text-white transition shadow-lg shadow-pink-500/20">
             <i class="fa-solid fa-film"></i>
           </div>
           <h3 class="text-lg font-bold text-white mb-1">Movies Quiz</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Telugu & Indian Cinema, Directors, Stars & Classics</p>
-          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-pink-950/80 border border-pink-500/40 text-pink-300">Active Module</span>
+          <p class="text-xs text-slate-400 leading-relaxed">Telugu & Indian Cinema, Directors & Stars</p>
+          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-pink-950/80 border border-pink-500/40 text-pink-300">Start Module</span>
         </div>
 
-        <!-- GK & UPSC Card -->
         <div onclick="startQuiz('gk')" class="glass-card p-6 rounded-2xl cursor-pointer transition duration-300 group flex flex-col items-center text-center">
           <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-3xl mb-4 group-hover:bg-cyan-500 group-hover:text-black transition shadow-lg shadow-cyan-500/20">
             <i class="fa-solid fa-graduation-cap"></i>
           </div>
           <h3 class="text-lg font-bold text-white mb-1">General GK & UPSC</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">History, World Geography, Science & Competitive GK</p>
-          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">Active Module</span>
+          <p class="text-xs text-slate-400 leading-relaxed">History, World Geography, Science & GK</p>
+          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">Start Module</span>
         </div>
 
-        <!-- Politics Card -->
         <div onclick="startQuiz('politics')" class="glass-card p-6 rounded-2xl cursor-pointer transition duration-300 group flex flex-col items-center text-center">
           <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-3xl mb-4 group-hover:bg-emerald-500 group-hover:text-white transition shadow-lg shadow-emerald-500/20">
             <i class="fa-solid fa-landmark"></i>
           </div>
           <h3 class="text-lg font-bold text-white mb-1">Politics Quiz</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Indian Constitution, Articles, Parliament & Governance</p>
-          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">Active Module</span>
+          <p class="text-xs text-slate-400 leading-relaxed">Indian Constitution, Articles & Parliament</p>
+          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">Start Module</span>
         </div>
       </div>
     </div>
 
-    <!-- 2. GOTURU CIRCULAR NEON LOADING ANIMATION -->
+    <!-- LOADING SCREEN WITH GOTURU SPINNER -->
     <div id="loading-screen" class="hidden flex flex-col items-center justify-center py-20 space-y-6 fade-anim">
       <div class="neon-circle-spinner"></div>
       <div class="text-center space-y-1">
         <p class="text-cyan-400 font-extrabold text-sm tracking-widest uppercase animate-pulse neon-text-cyan">
-          Loading Master Questions...
+          Loading Questions...
         </p>
         <p class="text-slate-500 text-xs">Goturu Interactive Engine</p>
       </div>
     </div>
 
-    <!-- 3. ACTIVE QUIZ PLAYGROUND -->
+    <!-- QUIZ PLAYGROUND -->
     <div id="quiz-screen" class="hidden fade-anim space-y-5">
-      <!-- Top Status & Progress Bar -->
       <div class="glass-box p-4 rounded-2xl flex flex-col gap-3">
         <div class="flex justify-between items-center">
-          <span id="level-badge" class="px-3.5 py-1 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
-            BEGINNER LEVEL
+          <span class="px-3.5 py-1 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+            MASTER LEVEL
           </span>
           <div class="text-xs text-slate-400 font-semibold">
-            Question <span id="current-q-num" class="text-cyan-400 font-extrabold text-base">1</span> <span class="text-slate-600" id="total-q-label">/ 30</span>
+            Question <span id="current-q-num" class="text-cyan-400 font-extrabold text-base">1</span> <span class="text-slate-600" id="total-q-label">/ 5</span>
           </div>
         </div>
         <div class="w-full bg-[#090d16] rounded-full h-2 overflow-hidden border border-slate-800">
@@ -180,13 +170,11 @@
         </div>
       </div>
 
-      <!-- Question Box -->
       <div class="glass-box p-6 md:p-8 rounded-2xl space-y-6">
         <h2 id="question-text" class="text-lg md:text-xl font-extrabold text-white leading-snug tracking-wide"></h2>
         <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2"></div>
       </div>
 
-      <!-- Explanation Box -->
       <div id="explanation-box" class="hidden glass-box p-5 rounded-2xl border-l-4 border-amber-500 bg-amber-950/30 space-y-4 fade-anim">
         <div class="flex items-center gap-2 text-amber-400 font-extrabold text-sm">
           <i class="fa-solid fa-circle-info"></i> EXPLANATION / వివరణ:
@@ -198,7 +186,7 @@
       </div>
     </div>
 
-    <!-- 4. RESULT SCREEN -->
+    <!-- RESULT SCREEN -->
     <div id="result-screen" class="hidden fade-anim text-center space-y-6 glass-box p-8 rounded-3xl">
       <div class="w-20 h-20 rounded-full bg-amber-400 mx-auto flex items-center justify-center text-black text-4xl shadow-xl shadow-amber-500/20">
         <i class="fa-solid fa-trophy"></i>
@@ -211,7 +199,7 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-4">
         <div class="glass-card p-4 rounded-xl">
           <div class="text-xs text-slate-400 font-bold mb-1">TOTAL</div>
-          <div class="text-2xl font-extrabold text-cyan-400" id="res-total">30</div>
+          <div class="text-2xl font-extrabold text-cyan-400" id="res-total">5</div>
         </div>
         <div class="glass-card p-4 rounded-xl">
           <div class="text-xs text-slate-400 font-bold mb-1">SCORE</div>
@@ -235,13 +223,12 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="mt-8 text-[11px] text-slate-500 text-center font-medium">
     Goturu Interactive • Master Quiz Platform
   </footer>
 
   <script>
-    let currentCategory = null;
+    let currentCategory = 'movies';
     let currentQuestionIndex = 0;
     let score = 0;
     let currentLang = 'te';
@@ -254,12 +241,7 @@
         { t: "Baahubali Lead Actor", c: "Prabhas", o: ["Prabhas", "Rana", "Ram Charan", "NTR"], exp_te: "ప్రభాస్ బాహుబలిగా నటించారు.", exp_en: "Prabhas starred as Baahubali." },
         { t: "Pushpa Best Actor National Award", c: "Allu Arjun", o: ["Allu Arjun", "Mahesh Babu", "Nani", "Vijay"], exp_te: "అల్లు అర్జున్ జాతీయ అవార్డు గెలుచుకున్నారు.", exp_en: "Allu Arjun won Best Actor." },
         { t: "Kalki 2898 AD Director", c: "Nag Ashwin", o: ["Nag Ashwin", "Rajamouli", "Sukumar", "Sandeep Vanga"], exp_te: "నాగ్ అశ్విన్ ఈ విజువల్ వండర్ తెరకెక్కించారు.", exp_en: "Nag Ashwin directed Kalki 2898 AD." },
-        { t: "Devara Lead Actor", c: "NTR Jr", o: ["NTR Jr", "Ram Charan", "Prabhas", "Allu Arjun"], exp_te: "జూనియర్ ఎన్టీఆర్ దేవర లో కథానాయకుడు.", exp_en: "NTR Jr played the lead in Devara." },
-        { t: "Salaar Director", c: "Prashanth Neel", o: ["Prashanth Neel", "Lokesh Kanagaraj", "Neelakanta", "Boyapati"], exp_te: "ప్రశాంత్ నీల్ సాలార్ దర్శకుడు.", exp_en: "Prashanth Neel directed Salaar." },
-        { t: "HanuMan Hero", c: "Teja Sajja", o: ["Teja Sajja", "Nithiin", "Vishwak Sen", "Siddhu"], exp_te: "తేజ సజ్జా హనుమాన్ హీరో.", exp_en: "Teja Sajja played Hanumanthu." },
-        { t: "Arjun Reddy Director", c: "Sandeep Reddy Vanga", o: ["Sandeep Reddy Vanga", "Puri Jagannadh", "Trivikram", "Gautam"], exp_te: "సందీప్ రెడ్డి వంగ ఈ చిత్ర దర్శకుడు.", exp_en: "Sandeep Reddy Vanga directed Arjun Reddy." },
-        { t: "Ala Vaikunthapurramuloo Music", c: "Thaman S", o: ["Thaman S", "DSP", "Keeravani", "Mani Sharma"], exp_te: "థమన్ ఈ చిత్రానికి సంగీతం అందించారు.", exp_en: "Thaman S composed the music." },
-        { t: "Eega Director", c: "S.S. Rajamouli", o: ["S.S. Rajamouli", "V.V. Vinayak", "Srinu Vaitla", "Puri Jagannadh"], exp_te: "ఎస్.ఎస్. రాజమౌళి ఈ చిత్రాన్ని రూపొందించారు.", exp_en: "S.S. Rajamouli directed Eega." }
+        { t: "Devara Lead Actor", c: "NTR Jr", o: ["NTR Jr", "Ram Charan", "Prabhas", "Allu Arjun"], exp_te: "జూనియర్ ఎన్టీఆర్ దేవర లో కథానాయకుడు.", exp_en: "NTR Jr played the lead in Devara." }
       ],
       gk: [
         { t: "Longest River in India", c: "Ganga", o: ["Ganga", "Godavari", "Yamuna", "Brahmaputra"], exp_te: "గంగా నది భారతదేశంలో అత్యంత పొడవైన నది.", exp_en: "Ganga is the longest river flowing in India." },
@@ -280,7 +262,8 @@
     function toggleLanguage() {
       currentLang = currentLang === 'te' ? 'en' : 'te';
       document.getElementById('lang-btn-text').innerText = currentLang === 'te' ? 'TELUGU' : 'ENGLISH';
-      if(document.getElementById('quiz-screen').classList.contains('fade-anim') && !document.getElementById('quiz-screen').classList.contains('hidden')) {
+      let quizScreen = document.getElementById('quiz-screen');
+      if (quizScreen && !quizScreen.classList.contains('hidden')) {
         displayQuestion();
       }
     }
@@ -291,8 +274,9 @@
       currentQuestionIndex = 0;
       score = 0;
       document.getElementById('user-score').innerText = score;
+      document.getElementById('total-q-label').innerText = `/ ${activeQuestions.length}`;
+      document.getElementById('res-total').innerText = activeQuestions.length;
 
-      // Switch to loading with Goturu Spinner
       document.getElementById('module-select-screen').classList.add('hidden');
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('loading-screen').classList.remove('hidden');
@@ -301,7 +285,7 @@
         document.getElementById('loading-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
         displayQuestion();
-      }, 700);
+      }, 500);
     }
 
     function displayQuestion() {
@@ -310,7 +294,6 @@
       let q = activeQuestions[currentQuestionIndex];
       
       document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
-      document.getElementById('total-q-label').innerText = `/ ${activeQuestions.length}`;
       
       let progressPercent = ((currentQuestionIndex + 1) / activeQuestions.length) * 100;
       document.getElementById('progress-bar-fill').style.width = progressPercent + '%';
@@ -320,7 +303,6 @@
       let optionsContainer = document.getElementById('options-container');
       optionsContainer.innerHTML = '';
 
-      // Shuffle options for interactivity
       let shuffledOpts = [...q.o].sort(() => Math.random() - 0.5);
 
       shuffledOpts.forEach(opt => {
@@ -347,12 +329,49 @@
         
         setTimeout(() => {
           nextQuestion();
-        }, 900);
+        }, 700);
       } else {
         btnElem.className = "w-full p-4 rounded-xl bg-pink-950/80 border border-pink-500 text-left font-semibold text-sm text-pink-300 flex justify-between items-center";
         btnElem.innerHTML += `<i class="fa-solid fa-xmark text-pink-400"></i>`;
 
-        // Highlight correct one
         for(let b of buttons) {
           if(b.innerText.includes(correct)) {
-            b.className = "w-full p-4 rounded-xl bg-emerald-950/60 border border-emerald-
+            b.className = "w-full p-4 rounded-xl bg-emerald-950/60 border border-emerald-500 text-left font-semibold text-sm text-emerald-300 flex justify-between items-center";
+          }
+        }
+
+        document.getElementById('explanation-text').innerText = currentLang === 'te' ? q.exp_te : q.exp_en;
+        document.getElementById('explanation-box').classList.remove('hidden');
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if(currentQuestionIndex < activeQuestions.length) {
+        displayQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.remove('hidden');
+
+      let total = activeQuestions.length * 10;
+      let accuracy = Math.round((score / total) * 100);
+
+      document.getElementById('res-score').innerText = score;
+      document.getElementById('res-accuracy').innerText = accuracy + '%';
+    }
+
+    function goHome() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.add('hidden');
+      document.getElementById('loading-screen').classList.add('hidden');
+      document.getElementById('module-select-screen').classList.remove('hidden');
+    }
+  </script>
+</body>
+  </html>
+  
