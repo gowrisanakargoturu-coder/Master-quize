@@ -1,5 +1,4 @@
-```html
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +14,6 @@
             color: #f3f4f6;
             overflow-x: hidden;
         }
-        /* Custom animations & glow effects */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -41,7 +39,6 @@
         }
         .animate-correct { animation: correctBounce 0.5s ease-in-out; }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0b0f19; }
         ::-webkit-scrollbar-thumb { background: #1f293d; border-radius: 4px; }
@@ -158,7 +155,6 @@
 
             <!-- VIEW 2: QUIZ INTERFACE -->
             <div id="view-quiz" class="hidden flex flex-col space-y-6">
-                <!-- Quiz Progress Bar Header -->
                 <div class="bg-gray-900/60 border border-gray-800/80 rounded-2xl p-4 sm:p-6 backdrop-blur-sm flex flex-col space-y-3">
                     <div class="flex items-center justify-between text-xs sm:text-sm font-medium">
                         <span id="quiz-category-badge" class="px-3 py-1 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-semibold uppercase tracking-wider">Module</span>
@@ -172,26 +168,18 @@
                     </div>
                 </div>
 
-                <!-- Question Card -->
                 <div id="question-card" class="bg-[#121826] border border-gray-800/80 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden transition-all duration-300">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-600/5 rounded-bl-full pointer-events-none"></div>
-                    
                     <h3 id="question-text" class="text-lg sm:text-2xl font-bold text-white mb-8 leading-snug">
                         Loading question...
                     </h3>
-
-                    <!-- 4 Options -->
-                    <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Option buttons will be injected dynamically -->
-                    </div>
+                    <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                 </div>
             </div>
 
             <!-- VIEW 3: GAME OVER / RESULT VIEW -->
             <div id="view-gameover" class="hidden flex flex-col items-center justify-center text-center space-y-6 py-8">
-                <div id="result-icon-container" class="w-24 h-24 rounded-3xl flex items-center justify-center text-4xl shadow-2xl animate-float">
-                    <!-- Dynamic Icon -->
-                </div>
+                <div id="result-icon-container" class="w-24 h-24 rounded-3xl flex items-center justify-center text-4xl shadow-2xl animate-float"></div>
                 <h2 id="result-title" class="text-3xl sm:text-4xl font-extrabold text-white">Game Over</h2>
                 <p id="result-subtitle" class="text-gray-400 max-w-md text-sm sm:text-base">You lost all your lives or completed the module.</p>
                 
@@ -219,105 +207,105 @@
 
         </main>
 
-        <!-- Footer -->
         <footer class="border-t border-gray-800/60 bg-[#070a12] py-4 px-6 text-center text-xs text-gray-500">
-            Goturu Interactions &bull; All 3 modules packed with 60 rigorous questions &bull; Designed for immersive experience
+            Goturu Interactions &bull; All 3 modules packed with 60 rigorous questions
         </footer>
     </div>
 
+    <!-- MAIN SCRIPT (INLINED TO PREVENT LOADING ISSUES) -->
     <script>
-        let audioCtx = null;
+        // Automatic Safety Fallback to force hide loading screen after 1.5s
+        setTimeout(() => {
+            const ls = document.getElementById('loading-screen');
+            const app = document.getElementById('app-container');
+            if (ls && ls.style.display !== 'none') {
+                ls.style.opacity = '0';
+                setTimeout(() => {
+                    ls.style.display = 'none';
+                    if (app) app.style.opacity = '1';
+                }, 500);
+            }
+        }, 1500);
 
-        function getAudioContext() {
-            if (!audioCtx) {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (AudioContextClass) {
-                    audioCtx = new AudioContextClass();
+        // Instant Progress bar animation
+        function runLoader() {
+            let progress = 0;
+            const progressBar = document.getElementById('loading-progress');
+            const progressText = document.getElementById('loading-percentage');
+            const loadingScreen = document.getElementById('loading-screen');
+            const appContainer = document.getElementById('app-container');
+
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 20) + 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        if (loadingScreen) loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            if (loadingScreen) loadingScreen.style.display = 'none';
+                            if (appContainer) appContainer.style.opacity = '1';
+                        }, 500);
+                    }, 200);
                 }
-            }
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            return audioCtx;
+                if (progressBar) progressBar.style.width = progress + '%';
+                if (progressText) progressText.textContent = progress + '%';
+            }, 80);
         }
 
-        function playCorrectSound() {
-            try {
-                const ctx = getAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(440, now); // A4
-                osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
-                
-                gain.gain.setValueAtTime(0.2, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                
-                osc.start(now);
-                osc.stop(now + 0.3);
-            } catch (e) {
-                console.error("Audio error:", e);
-            }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runLoader);
+        } else {
+            runLoader();
         }
 
-        function playIncorrectSound() {
-            try {
-                const ctx = getAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(220, now);
-                osc.frequency.linearRampToValueAtTime(110, now + 0.3);
-                
-                gain.gain.setValueAtTime(0.25, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-                
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                
-                osc.start(now);
-                osc.stop(now + 0.35);
-            } catch (e) {
-                console.error("Audio error:", e);
-            }
-        }
-
-        function playGameOverSound() {
-            try {
-                const ctx = getAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-                [300, 250, 200, 150].forEach((freq, index) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(freq, now + (index * 0.15));
-                    gain.gain.setValueAtTime(0.2, now + (index * 0.15));
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + (index * 0.15) + 0.2);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(now + (index * 0.15));
-                    osc.stop(now + (index * 0.15) + 0.2);
-                });
-            } catch (e) {
-                console.error("Audio error:", e);
-            }
-        }
-    </script>
-
-    <script>
-        // 60 Political Science Questions (Last 20 are extremely challenging)
+        // Quiz Logic
         const politicsQuestions = [
-            // Questions 1-40 (Standard to Moderate)
             {q: "Which country is the oldest continuous democracy in the world?", options: ["United States", "San Marino", "United Kingdom", "Greece"], answer: 1},
             {q: "Who is known as the father of political science?", options: ["Plato", "Socrates", "Aristotle", "Machiavelli"], answer: 2},
-            {q: "What is the supreme l
+            {q: "What is the supreme law of the United States?", options: ["The Declaration of Independence", "The Bill of Rights", "The Constitution", "The Magna Carta"], answer: 2},
+            {q: "In which year was the United Nations founded?", options: ["1942", "1945", "1950", "1939"], answer: 1}
+        ];
+
+        const moviesQuestions = [
+            {q: "Which movie won the Academy Award for Best Picture in 1994?", options: ["Pulp Fiction", "The Shawshank Redemption", "Forrest Gump", "Schindler's List"], answer: 2},
+            {q: "Who directed 'Inception' (2010)?", options: ["Steven Spielberg", "Christopher Nolan", "James Cameron", "Quentin Tarantino"], answer: 1}
+        ];
+
+        const gkQuestions = [
+            {q: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Brisbane"], answer: 2},
+            {q: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], answer: 1}
+        ];
+
+        let currentModuleKey = '';
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let lives = 5;
+
+        function shuffleArray(array) {
+            let cur = array.length, rand;
+            while (cur != 0) {
+                rand = Math.floor(Math.random() * cur);
+                cur--;
+                [array[cur], array[rand]] = [array[rand], array[cur]];
+            }
+            return array;
+        }
+
+        function startQuiz(moduleKey) {
+            currentModuleKey = moduleKey;
+            score = 0;
+            lives = 5;
+            currentIndex = 0;
+
+            let rawList = [];
+            if (moduleKey === 'politics') rawList = JSON.parse(JSON.stringify(politicsQuestions));
+            else if (moduleKey === 'movies') rawList = JSON.parse(JSON.stringify(moviesQuestions));
+            else if (moduleKey === 'gk') rawList = 
+                                            </div>
+
+    
+                                                            osc.connect(gain);
+                    
+                                        
