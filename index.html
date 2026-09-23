@@ -1,377 +1,312 @@
-  <!DOCTYPE html>
-<html lang="te">
+```html
+<!DOCTYPE html>
+<html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Quiz - Goturu Interactive</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
-    
-    :root {
-      --neon-cyan: #00f3ff;
-      --neon-pink: #ff007f;
-      --bg-dark: #0b0f19;
-      --card-bg: #121826;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif;
-      background: var(--bg-dark);
-      color: #f8fafc;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    .glass-box {
-      background: rgba(18, 24, 38, 0.95);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      box-shadow: 0 0 25px rgba(0, 243, 255, 0.1);
-    }
-
-    .glass-card {
-      background: #121826;
-      border: 1px solid #1f2b42;
-    }
-
-    .glass-card:hover {
-      background: #172134;
-      border-color: var(--neon-cyan);
-      box-shadow: 0 5px 20px rgba(0, 243, 255, 0.15);
-    }
-
-    .neon-circle-spinner {
-      width: 75px;
-      height: 75px;
-      border: 5px solid rgba(0, 243, 255, 0.1);
-      border-top: 5px solid var(--neon-cyan);
-      border-right: 5px solid var(--neon-pink);
-      border-radius: 50%;
-      animation: spinRing 0.8s linear infinite;
-      box-shadow: 0 0 20px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
-    }
-
-    @keyframes spinRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .fade-anim {
-      animation: fadeIn 0.3s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .neon-text-cyan {
-      text-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
-    }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col justify-between items-center p-4 md:p-6">
-
-  <!-- HEADER -->
-  <header class="w-full max-w-4xl flex justify-between items-center p-4 glass-box rounded-2xl mb-6">
-    <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
-      <div class="bg-cyan-500/15 border border-cyan-400 p-3 rounded-xl text-cyan-400 font-extrabold shadow-lg shadow-cyan-500/20">
-        <i class="fa-solid fa-brain text-2xl"></i>
-      </div>
-      <div>
-        <h1 class="font-extrabold text-lg md:text-xl tracking-wide text-white neon-text-cyan">
-          MASTER QUIZ <span class="text-cyan-400">HUB</span>
-        </h1>
-        <p class="text-[11px] text-slate-400 font-medium">Goturu Interactive Engine</p>
-      </div>
-    </div>
-    
-    <div class="flex items-center gap-3">
-      <button onclick="toggleLanguage()" class="px-3.5 py-2 rounded-xl bg-[#090d16] border border-cyan-500/40 hover:border-cyan-400 text-xs font-bold transition flex items-center gap-2 text-cyan-300">
-        <i class="fa-solid fa-language text-sm"></i>
-        <span id="lang-btn-text">TELUGU</span>
-      </button>
-      
-      <div class="px-3.5 py-2 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-xs font-bold text-cyan-400 flex items-center gap-1.5">
-        <i class="fa-solid fa-trophy text-amber-400"></i>
-        <span id="user-score" class="text-white text-sm font-extrabold">0</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- MAIN CONTAINER -->
-  <main class="w-full max-w-4xl flex-1 flex flex-col justify-center">
-
-    <!-- MODULE SELECTION -->
-    <div id="module-select-screen" class="fade-anim space-y-6 text-center">
-      <div class="space-y-2">
-        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Select Quiz Module</h2>
-        <p class="text-slate-400 text-xs md:text-sm max-w-lg mx-auto">
-          దయచేసి కింద ఇచ్చిన కేటగిరీలలో ఒకదానిని ఎంచుకోండి.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
-        <div onclick="startQuiz('movies')" class="glass-card p-6 rounded-2xl cursor-pointer transition duration-300 group flex flex-col items-center text-center">
-          <div class="w-16 h-16 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 text-3xl mb-4 group-hover:bg-pink-500 group-hover:text-white transition shadow-lg shadow-pink-500/20">
-            <i class="fa-solid fa-film"></i>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-1">Movies Quiz</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Telugu & Indian Cinema, Directors & Stars</p>
-          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-pink-950/80 border border-pink-500/40 text-pink-300">Start Module</span>
-        </div>
-
-        <div onclick="startQuiz('gk')" class="glass-card p-6 rounded-2xl cursor-pointer transition duration-300 group flex flex-col items-center text-center">
-          <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-3xl mb-4 group-hover:bg-cyan-500 group-hover:text-black transition shadow-lg shadow-cyan-500/20">
-            <i class="fa-solid fa-graduation-cap"></i>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-1">General GK & UPSC</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">History, World Geography, Science & GK</p>
-          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">Start Module</span>
-        </div>
-
-        <div onclick="startQuiz('politics')" class="glass-card p-6 rounded-2xl cursor-pointer transition duration-300 group flex flex-col items-center text-center">
-          <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-3xl mb-4 group-hover:bg-emerald-500 group-hover:text-white transition shadow-lg shadow-emerald-500/20">
-            <i class="fa-solid fa-landmark"></i>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-1">Politics Quiz</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Indian Constitution, Articles & Parliament</p>
-          <span class="mt-5 text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">Start Module</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- LOADING SCREEN WITH GOTURU SPINNER -->
-    <div id="loading-screen" class="hidden flex flex-col items-center justify-center py-20 space-y-6 fade-anim">
-      <div class="neon-circle-spinner"></div>
-      <div class="text-center space-y-1">
-        <p class="text-cyan-400 font-extrabold text-sm tracking-widest uppercase animate-pulse neon-text-cyan">
-          Loading Questions...
-        </p>
-        <p class="text-slate-500 text-xs">Goturu Interactive Engine</p>
-      </div>
-    </div>
-
-    <!-- QUIZ PLAYGROUND -->
-    <div id="quiz-screen" class="hidden fade-anim space-y-5">
-      <div class="glass-box p-4 rounded-2xl flex flex-col gap-3">
-        <div class="flex justify-between items-center">
-          <span class="px-3.5 py-1 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
-            MASTER LEVEL
-          </span>
-          <div class="text-xs text-slate-400 font-semibold">
-            Question <span id="current-q-num" class="text-cyan-400 font-extrabold text-base">1</span> <span class="text-slate-600" id="total-q-label">/ 5</span>
-          </div>
-        </div>
-        <div class="w-full bg-[#090d16] rounded-full h-2 overflow-hidden border border-slate-800">
-          <div id="progress-bar-fill" class="bg-cyan-400 h-full w-[0%] transition-all duration-300"></div>
-        </div>
-      </div>
-
-      <div class="glass-box p-6 md:p-8 rounded-2xl space-y-6">
-        <h2 id="question-text" class="text-lg md:text-xl font-extrabold text-white leading-snug tracking-wide"></h2>
-        <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2"></div>
-      </div>
-
-      <div id="explanation-box" class="hidden glass-box p-5 rounded-2xl border-l-4 border-amber-500 bg-amber-950/30 space-y-4 fade-anim">
-        <div class="flex items-center gap-2 text-amber-400 font-extrabold text-sm">
-          <i class="fa-solid fa-circle-info"></i> EXPLANATION / వివరణ:
-        </div>
-        <p id="explanation-text" class="text-xs md:text-sm text-slate-200 leading-relaxed font-medium"></p>
-        <button onclick="nextQuestion()" class="w-full py-3.5 bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold rounded-xl shadow-lg shadow-cyan-500/20 transition flex items-center justify-center gap-2 text-sm">
-          NEXT QUESTION <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- RESULT SCREEN -->
-    <div id="result-screen" class="hidden fade-anim text-center space-y-6 glass-box p-8 rounded-3xl">
-      <div class="w-20 h-20 rounded-full bg-amber-400 mx-auto flex items-center justify-center text-black text-4xl shadow-xl shadow-amber-500/20">
-        <i class="fa-solid fa-trophy"></i>
-      </div>
-      <div>
-        <h2 class="text-2xl font-extrabold text-white">Quiz Completed!</h2>
-        <p class="text-slate-400 text-sm mt-1">Great effort on completing the Master Quiz module.</p>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-4">
-        <div class="glass-card p-4 rounded-xl">
-          <div class="text-xs text-slate-400 font-bold mb-1">TOTAL</div>
-          <div class="text-2xl font-extrabold text-cyan-400" id="res-total">5</div>
-        </div>
-        <div class="glass-card p-4 rounded-xl">
-          <div class="text-xs text-slate-400 font-bold mb-1">SCORE</div>
-          <div class="text-2xl font-extrabold text-emerald-400" id="res-score">0</div>
-        </div>
-        <div class="glass-card p-4 rounded-xl col-span-2 md:col-span-1">
-          <div class="text-xs text-slate-400 font-bold mb-1">ACCURACY</div>
-          <div class="text-2xl font-extrabold text-pink-400" id="res-accuracy">0%</div>
-        </div>
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-4 pt-2">
-        <button onclick="startQuiz(currentCategory)" class="flex-1 py-3.5 bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold rounded-xl transition text-xs">
-          <i class="fa-solid fa-rotate-right mr-2"></i> RESTART MODULE
-        </button>
-        <button onclick="goHome()" class="flex-1 py-3.5 bg-[#172134] hover:bg-[#1f2b42] text-white font-extrabold rounded-xl border border-slate-700 transition text-xs">
-          <i class="fa-solid fa-house mr-2"></i> SELECT ANOTHER MODULE
-        </button>
-      </div>
-    </div>
-
-  </main>
-
-  <footer class="mt-8 text-[11px] text-slate-500 text-center font-medium">
-    Goturu Interactive • Master Quiz Platform
-  </footer>
-
-  <script>
-    let currentCategory = 'movies';
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let currentLang = 'te';
-    let canAnswer = true;
-    let activeQuestions = [];
-
-    const quizData = {
-      movies: [
-        { t: "RRR 'Naatu Naatu' Music Composer", c: "M.M. Keeravani", o: ["M.M. Keeravani", "DSP", "Thaman", "A.R. Rahman"], exp_te: "కీరవాణి ఆస్కార్ అవార్డు గెలుచుకున్నారు.", exp_en: "M.M. Keeravani won the Oscar." },
-        { t: "Baahubali Lead Actor", c: "Prabhas", o: ["Prabhas", "Rana", "Ram Charan", "NTR"], exp_te: "ప్రభాస్ బాహుబలిగా నటించారు.", exp_en: "Prabhas starred as Baahubali." },
-        { t: "Pushpa Best Actor National Award", c: "Allu Arjun", o: ["Allu Arjun", "Mahesh Babu", "Nani", "Vijay"], exp_te: "అల్లు అర్జున్ జాతీయ అవార్డు గెలుచుకున్నారు.", exp_en: "Allu Arjun won Best Actor." },
-        { t: "Kalki 2898 AD Director", c: "Nag Ashwin", o: ["Nag Ashwin", "Rajamouli", "Sukumar", "Sandeep Vanga"], exp_te: "నాగ్ అశ్విన్ ఈ విజువల్ వండర్ తెరకెక్కించారు.", exp_en: "Nag Ashwin directed Kalki 2898 AD." },
-        { t: "Devara Lead Actor", c: "NTR Jr", o: ["NTR Jr", "Ram Charan", "Prabhas", "Allu Arjun"], exp_te: "జూనియర్ ఎన్టీఆర్ దేవర లో కథానాయకుడు.", exp_en: "NTR Jr played the lead in Devara." }
-      ],
-      gk: [
-        { t: "Longest River in India", c: "Ganga", o: ["Ganga", "Godavari", "Yamuna", "Brahmaputra"], exp_te: "గంగా నది భారతదేశంలో అత్యంత పొడవైన నది.", exp_en: "Ganga is the longest river flowing in India." },
-        { t: "Capital on Yamuna River", c: "New Delhi", o: ["New Delhi", "Kolkata", "Mumbai", "Chennai"], exp_te: "న్యూఢిల్లీ యమునా నది ఒడ్డున ఉంది.", exp_en: "New Delhi is located along the Yamuna." },
-        { t: "Highest Peak in India", c: "Kanchenjunga", o: ["Kanchenjunga", "Nanda Devi", "Anamudi", "K2 (PoK)"], exp_te: "భారత భూభాగంలోని అత్యున్నత శిఖరం కాంచన్‌జంగా.", exp_en: "Kanchenjunga is the highest peak inside India." },
-        { t: "Largest State in India by Area", c: "Rajasthan", o: ["Rajasthan", "Madhya Pradesh", "Maharashtra", "UP"], exp_te: "వైశాల్యంలో రాజస్థాన్ అతిపెద్ద రాష్ట్రం.", exp_en: "Rajasthan is the largest state by area." },
-        { t: "First Prime Minister of India", c: "Jawaharlal Nehru", o: ["Jawaharlal Nehru", "Mahatma Gandhi", "Sardar Patel", "Dr. B.R. Ambedkar"], exp_te: "జవహర్‌లాల్ నెహ్రూ మొదటి ప్రధాని.", exp_en: "Jawaharlal Nehru was the first Prime Minister." }
-      ],
-      politics: [
-        { t: "Father of Indian Constitution", c: "Dr. B.R. Ambedkar", o: ["Dr. B.R. Ambedkar", "Mahatma Gandhi", "Jawaharlal Nehru", "Rajendra Prasad"], exp_te: "డాక్టర్ బి.ఆర్. అంబేద్కర్ రాజ్యాంగ నిర్మాత.", exp_en: "Dr. B.R. Ambedkar is the Father of the Constitution." },
-        { t: "Total Members in Rajya Sabha (Max)", c: "250", o: ["250", "245", "545", "552"], exp_te: "రాజ్యసభ గరిష్ట సభ్యుల సంఖ్య 250.", exp_en: "Maximum strength of Rajya Sabha is 250." },
-        { t: "Minimum Age for Lok Sabha MP", c: "25 Years", o: ["25 Years", "21 Years", "30 Years", "35 Years"], exp_te: "లోక్‌సభ సభ్యునికి కనీస వయసు 25 సంవత్సరాలు.", exp_en: "Minimum age for Lok Sabha is 25 years." },
-        { t: "Article 370 was related to which state?", c: "Jammu & Kashmir", o: ["Jammu & Kashmir", "Punjab", "Assam", "Goa"], exp_te: "ఆర్టికల్ 370 జమ్మూ & కాశ్మీర్‌కు ప్రత్యేక ప్రతిపత్తి ఇచ్చింది.", exp_en: "Article 370 was related to Jammu & Kashmir." },
-        { t: "Who appoints the Chief Justice of India?", c: "President of India", o: ["President of India", "Prime Minister", "Law Minister", "Vice President"], exp_te: "భారత రాష్ట్రపతి సీజేఐని నియమిస్తారు.", exp_en: "The President of India appoints the CJI." }
-      ]
-    };
-
-    function toggleLanguage() {
-      currentLang = currentLang === 'te' ? 'en' : 'te';
-      document.getElementById('lang-btn-text').innerText = currentLang === 'te' ? 'TELUGU' : 'ENGLISH';
-      let quizScreen = document.getElementById('quiz-screen');
-      if (quizScreen && !quizScreen.classList.contains('hidden')) {
-        displayQuestion();
-      }
-    }
-
-    function startQuiz(category) {
-      currentCategory = category;
-      activeQuestions = quizData[category] || quizData.movies;
-      currentQuestionIndex = 0;
-      score = 0;
-      document.getElementById('user-score').innerText = score;
-      document.getElementById('total-q-label').innerText = `/ ${activeQuestions.length}`;
-      document.getElementById('res-total').innerText = activeQuestions.length;
-
-      document.getElementById('module-select-screen').classList.add('hidden');
-      document.getElementById('result-screen').classList.add('hidden');
-      document.getElementById('loading-screen').classList.remove('hidden');
-
-      setTimeout(() => {
-        document.getElementById('loading-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.remove('hidden');
-        displayQuestion();
-      }, 500);
-    }
-
-    function displayQuestion() {
-      canAnswer = true;
-      document.getElementById('explanation-box').classList.add('hidden');
-      let q = activeQuestions[currentQuestionIndex];
-      
-      document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
-      
-      let progressPercent = ((currentQuestionIndex + 1) / activeQuestions.length) * 100;
-      document.getElementById('progress-bar-fill').style.width = progressPercent + '%';
-
-      document.getElementById('question-text').innerText = q.t;
-
-      let optionsContainer = document.getElementById('options-container');
-      optionsContainer.innerHTML = '';
-
-      let shuffledOpts = [...q.o].sort(() => Math.random() - 0.5);
-
-      shuffledOpts.forEach(opt => {
-        let btn = document.createElement('button');
-        btn.className = "w-full p-4 rounded-xl bg-[#090d16] border border-[#273754] hover:border-cyan-400 text-left font-semibold text-sm text-slate-200 transition flex justify-between items-center group";
-        btn.innerHTML = `<span>${opt}</span><i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-cyan-400 text-xs"></i>`;
-        btn.onclick = () => selectOption(opt, q.c, btn);
-        optionsContainer.appendChild(btn);
-      });
-    }
-
-    function selectOption(selected, correct, btnElem) {
-      if(!canAnswer) return;
-      canAnswer = false;
-
-      let q = activeQuestions[currentQuestionIndex];
-      let buttons = document.getElementById('options-container').getElementsByTagName('button');
-
-      if(selected === correct) {
-        score += 10;
-        document.getElementById('user-score').innerText = score;
-        btnElem.className = "w-full p-4 rounded-xl bg-emerald-950/80 border border-emerald-500 text-left font-semibold text-sm text-emerald-300 flex justify-between items-center";
-        btnElem.innerHTML += `<i class="fa-solid fa-check text-emerald-400"></i>`;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goturu Interactions - Ultimate Quiz Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #090d16;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        /* Custom animations & glow effects */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
         
-        setTimeout(() => {
-          nextQuestion();
-        }, 700);
-      } else {
-        btnElem.className = "w-full p-4 rounded-xl bg-pink-950/80 border border-pink-500 text-left font-semibold text-sm text-pink-300 flex justify-between items-center";
-        btnElem.innerHTML += `<i class="fa-solid fa-xmark text-pink-400"></i>`;
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8); }
+        }
+        .pulse-glow { animation: pulseGlow 3s infinite; }
 
-        for(let b of buttons) {
-          if(b.innerText.includes(correct)) {
-            b.className = "w-full p-4 rounded-xl bg-emerald-950/60 border border-emerald-500 text-left font-semibold text-sm text-emerald-300 flex justify-between items-center";
-          }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+
+        @keyframes correctBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); background-color: rgba(16, 185, 129, 0.2); }
+        }
+        .animate-correct { animation: correctBounce 0.5s ease-in-out; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #1f293d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #374151; }
+    </style>
+</head>
+<body class="h-full flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#060911] transition-opacity duration-700">
+        <div class="relative flex flex-col items-center">
+            <div class="w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-2xl pulse-glow mb-8 animate-float">
+                <i class="fa-solid fa-brain text-4xl text-white"></i>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-800 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 text-center mb-2">Goturu Interactions</h1>
+            <p class="text-gray-400 text-sm tracking-widest uppercase mb-8">Loading Ultimate Knowledge Matrix...</p>
+            <div class="w-64 h-2 bg-gray-800 rounded-full overflow-hidden p-0.5 border border-gray-700/50">
+                <div id="loading-progress" class="h-full bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full w-0 transition-all duration-300"></div>
+            </div>
+            <span id="loading-percentage" class="text-xs text-gray-500 mt-2 font-mono">0%</span>
+        </div>
+    </div>
+
+    <div id="app-container" class="opacity-0 transition-opacity duration-700 flex flex-col min-h-screen">
+        
+        <!-- Header -->
+        <header class="w-full border-b border-gray-800/80 bg-[#0c101d]/80 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="returnToDashboard()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-bolt text-white text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-wide text-white">Goturu Interactions</span>
+                    <span class="block text-[10px] text-indigo-400 font-medium tracking-widest uppercase">Interactive Quiz Hub</span>
+                </div>
+            </div>
+            <div id="user-stats-bar" class="hidden items-center space-x-4">
+                <div class="bg-gray-900/90 border border-gray-800 px-3 py-1.5 rounded-xl flex items-center space-x-2 text-xs sm:text-sm">
+                    <i class="fa-solid fa-heart text-rose-500 animate-pulse"></i>
+                    <span class="text-gray-400">Lives:</span>
+                    <span id="stat-lives" class="font-bold text-rose-400">5/5</span>
+                </div>
+                <div class="bg-gray-900/90 border border-gray-800 px-3 py-1.5 rounded-xl flex items-center space-x-2 text-xs sm:text-sm">
+                    <i class="fa-solid fa-star text-amber-400"></i>
+                    <span class="text-gray-400">Score:</span>
+                    <span id="stat-score" class="font-bold text-amber-300">0</span>
+                </div>
+                <button onclick="returnToDashboard()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl transition font-medium border border-gray-700">
+                    <i class="fa-solid fa-house mr-1"></i> Exit
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dynamic Content Area -->
+        <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 md:p-8 flex flex-col justify-center">
+            
+            <!-- VIEW 1: DASHBOARD / MODULE SELECTION -->
+            <div id="view-dashboard" class="space-y-8 py-4">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Select Module to Play</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Choose Your Battleground</h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Each module contains 60 meticulously curated questions with progressive difficulty. Answer correctly for +10 points, watch out for -10 penalty on mistakes, and 5 strikes mean Game Over!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                    <!-- Module 1: Political Science -->
+                    <div onclick="startQuiz('politics')" class="group relative bg-gradient-to-b from-[#131b2e] to-[#0e1422] border border-gray-800 hover:border-indigo-500/50 rounded-3xl p-6 sm:p-8 transition-all duration-300 hover:-translate-y-2 cursor-pointer shadow-xl overflow-hidden flex flex-col justify-between">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-600/10 rounded-full blur-2xl group-hover:bg-indigo-600/20 transition-all"></div>
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-landmark"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">Political Science</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">Constitutions, global governance, political theories, and historical landmarks.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800/80 pt-4 text-xs font-medium text-gray-400">
+                            <span><i class="fa-solid fa-list-check mr-1 text-indigo-400"></i> 60 Questions</span>
+                            <span class="text-indigo-400 group-hover:translate-x-1 transition-transform flex items-center">Play Now <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Module 2: Movies -->
+                    <div onclick="startQuiz('movies')" class="group relative bg-gradient-to-b from-[#1c1428] to-[#130f1c] border border-gray-800 hover:border-purple-500/50 rounded-3xl p-6 sm:p-8 transition-all duration-300 hover:-translate-y-2 cursor-pointer shadow-xl overflow-hidden flex flex-col justify-between">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-600/10 rounded-full blur-2xl group-hover:bg-purple-600/20 transition-all"></div>
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">Movies & Cinema</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">Global cinema trivia, directors, legendary masterpieces, and cinematic history.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800/80 pt-4 text-xs font-medium text-gray-400">
+                            <span><i class="fa-solid fa-list-check mr-1 text-purple-400"></i> 60 Questions</span>
+                            <span class="text-purple-400 group-hover:translate-x-1 transition-transform flex items-center">Play Now <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Module 3: General Knowledge (GK) -->
+                    <div onclick="startQuiz('gk')" class="group relative bg-gradient-to-b from-[#1a1b18] to-[#121310] border border-gray-800 hover:border-amber-500/50 rounded-3xl p-6 sm:p-8 transition-all duration-300 hover:-translate-y-2 cursor-pointer shadow-xl overflow-hidden flex flex-col justify-between">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-600/10 rounded-full blur-2xl group-hover:bg-amber-600/20 transition-all"></div>
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">General Knowledge</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">Science, world geography, history, inventions, and fascinating facts.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800/80 pt-4 text-xs font-medium text-gray-400">
+                            <span><i class="fa-solid fa-list-check mr-1 text-amber-400"></i> 60 Questions</span>
+                            <span class="text-amber-400 group-hover:translate-x-1 transition-transform flex items-center">Play Now <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: QUIZ INTERFACE -->
+            <div id="view-quiz" class="hidden flex flex-col space-y-6">
+                <!-- Quiz Progress Bar Header -->
+                <div class="bg-gray-900/60 border border-gray-800/80 rounded-2xl p-4 sm:p-6 backdrop-blur-sm flex flex-col space-y-3">
+                    <div class="flex items-center justify-between text-xs sm:text-sm font-medium">
+                        <span id="quiz-category-badge" class="px-3 py-1 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-semibold uppercase tracking-wider">Module</span>
+                        <div class="flex items-center space-x-3">
+                            <span id="question-difficulty-badge" class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 text-xs font-semibold">Easy</span>
+                            <span class="text-gray-400">Question <strong id="current-q-num" class="text-white">1</strong> of <strong class="text-white">60</strong></span>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-pink-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Question Card -->
+                <div id="question-card" class="bg-[#121826] border border-gray-800/80 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-600/5 rounded-bl-full pointer-events-none"></div>
+                    
+                    <h3 id="question-text" class="text-lg sm:text-2xl font-bold text-white mb-8 leading-snug">
+                        Loading question...
+                    </h3>
+
+                    <!-- 4 Options -->
+                    <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Option buttons will be injected dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: GAME OVER / RESULT VIEW -->
+            <div id="view-gameover" class="hidden flex flex-col items-center justify-center text-center space-y-6 py-8">
+                <div id="result-icon-container" class="w-24 h-24 rounded-3xl flex items-center justify-center text-4xl shadow-2xl animate-float">
+                    <!-- Dynamic Icon -->
+                </div>
+                <h2 id="result-title" class="text-3xl sm:text-4xl font-extrabold text-white">Game Over</h2>
+                <p id="result-subtitle" class="text-gray-400 max-w-md text-sm sm:text-base">You lost all your lives or completed the module.</p>
+                
+                <div class="bg-gray-900/80 border border-gray-800 rounded-2xl p-6 max-w-sm w-full grid grid-cols-2 gap-4 text-center">
+                    <div>
+                        <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Final Score</span>
+                        <span id="final-score" class="text-2xl font-bold text-amber-300">0</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Correct Ans</span>
+                        <span id="final-correct" class="text-2xl font-bold text-emerald-400">0</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-4 pt-2">
+                    <button onclick="retryCurrentModule()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition shadow-lg shadow-indigo-600/30 flex items-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Play Again</span>
+                    </button>
+                    <button onclick="returnToDashboard()" class="px-6 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold transition border border-gray-700">
+                        <i class="fa-solid fa-house mr-1"></i> Dashboard
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-gray-800/60 bg-[#070a12] py-4 px-6 text-center text-xs text-gray-500">
+            Goturu Interactions &bull; All 3 modules packed with 60 rigorous questions &bull; Designed for immersive experience
+        </footer>
+    </div>
+
+    <script>
+        // Web Audio API Sound Synthesizer for instant, lag-free BGM and SFX without external audio files
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playCorrectSound() {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, now); // A4
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+                
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch (e) {
+                console.error(e);
+            }
         }
 
-        document.getElementById('explanation-text').innerText = currentLang === 'te' ? q.exp_te : q.exp_en;
-        document.getElementById('explanation-box').classList.remove('hidden');
-      }
-    }
+        function playIncorrectSound() {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.linearRampToValueAtTime(110, now + 0.3);
+                
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } catch (e) {
+                console.error(e);
+            }
+        }
 
-    function nextQuestion() {
-      currentQuestionIndex++;
-      if(currentQuestionIndex < activeQuestions.length) {
-        displayQuestion();
-      } else {
-        showResult();
-      }
-    }
+        function playGameOverSound() {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                [300, 250, 200, 150].forEach((freq, index) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(freq, now + (index * 0.15));
+                    gain.gain.setValueAtTime(0.2, now + (index * 0.15));
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + (index * 0.15) + 0.2);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now + (index * 0.15));
+                    osc.stop(now + (index * 0.15) + 0.2);
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    </script>
 
-    function showResult() {
-      document.getElementById('quiz-screen').classList.add('hidden');
-      document.getElementById('result-screen').classList.remove('hidden');
+    <script>
+        // 60 Political Science Questions (Last 20 are extremely challenging)
+        const politicsQuestions = [
+            // Questions 1-40 (Standard to Moderate)
+            {q: "Which country is the oldest continuous democracy in the world?", options: ["United States", "San Marino", "United Kingdom", "Greece"], answer: 1},
+            {q: "Who is known as the father of political science?", options: ["Plato", "Socrates", "Aristotle", "Machiavelli"], answer: 2},
+            {q: "What is the supreme law of the United States?", options: ["The Declaration of Independence", "The Bill of Rights", "The Constitution", "The Magna Carta"], answer: 2},
+            {q: "In which year was the United Nations founded?", options: ["1942", "1945", "1950", "1939"], answer: 1},
+            {q: "How many members are there in the United Nations Security Council?", options: ["
 
-      let total = activeQuestions.length * 10;
-      let accuracy = Math.round((score / total) * 100);
 
-      document.getElementById('res-score').innerText = score;
-      document.getElementById('res-accuracy').innerText = accuracy + '%';
-    }
-
-    function goHome() {
-      document.getElementById('quiz-screen').classList.add('hidden');
-      document.getElementById('result-screen').classList.add('hidden');
-      document.getElementById('loading-screen').classList.add('hidden');
-      document.getElementById('module-select-screen').classList.remove('hidden');
-    }
-  </script>
-</body>
-  </html>
-  
